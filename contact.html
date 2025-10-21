@@ -56,6 +56,19 @@
 
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
+	<!-- ✅ Leaflet 免费交互地图（必须） -->
+	<link
+	rel="stylesheet"
+	href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+	integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+	crossorigin=""
+	/>
+	<script
+	src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+	integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+	crossorigin=""
+	></script>
+
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
@@ -269,6 +282,12 @@
 		</div>
 	</div>
 
+
+
+
+
+
+
 	<div id="map" class="fh5co-map"></div>
 		<!-- END map -->
 
@@ -278,8 +297,8 @@
 			<div class="row copyright">
 				<div class="col-md-12 text-center">
 					<p>
-						<small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small> 
-						<small class="block">Designed by <a href="http://freehtml5.co/" target="_blank">FREEHTML5.co</a> Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a></small>
+						<small class="block">&copy; 2025 Mina & Richard’s Wedding. All Rights Reserved.</small>
+						<small class="block">Designed with 💕 by Mina Huang</small>
 					</p>
 					<p>
 						<ul class="fh5co-social-icons">
@@ -319,9 +338,35 @@
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/magnific-popup-options.js"></script>
 	<!-- Google Map -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="js/google_map.js"></script>
+	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+	<script src="js/google_map.js"></script> -->
+	<!-- ✅ Leaflet 地图初始化 -->
+	<script>
+	const CHURCH  = [-33.829045, 151.239332]; // Sacred Heart Church
+	const BATHERS = [-33.830444, 151.247355]; // Bathers' Pavilion
 
+	document.addEventListener('DOMContentLoaded', function () {
+		const el = document.getElementById('map');
+		if (!el) return;
+
+		const map = L.map('map', { scrollWheelZoom: true, tap: true }).setView(CHURCH, 15);
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; OpenStreetMap'
+		}).addTo(map);
+
+		const m1 = L.marker(CHURCH).addTo(map).bindPopup(
+		'<b>Sacred Heart Church</b><br>23 Cardinal St, Mosman NSW 2088'
+		);
+		const m2 = L.marker(BATHERS).addTo(map).bindPopup(
+		"<b>Bathers' Pavilion</b><br>4 The Esplanade, Mosman NSW 2088"
+		);
+
+		const group = L.featureGroup([m1, m2]);
+		map.fitBounds(group.getBounds(), { padding: [30, 30] });
+	});
+	</script>
 	<!-- Main -->
 	<script src="js/main.js"></script>
 
